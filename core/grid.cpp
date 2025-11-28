@@ -7,18 +7,47 @@
 
 // ----------------------------------------------------------------------------
 // Check if a position is inside the grid.
-// ----------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 // Returns true if x,y are within bounds.
 // ----------------------------------------------------------------------------
-bool isInBounds() {
+bool isInBounds(int x,int y) {
+    if(x<0){
+    cout<<"Out of tile track"
+    return false;
+}
+if(x>=row){
+    cout<<"Out of tile track"
+    return false;
+}
+if(y<0){
+    cout<<"Out of tile track"
+    return false;
+}
+if(y>=col){
+    cout<<"Out of tile track"
+    return false;
+}
+
 }
 
 // ----------------------------------------------------------------------------
 // Check if a tile is a track tile.
+
 // ----------------------------------------------------------------------------
 // Returns true if the tile can be traversed by trains.
 // ----------------------------------------------------------------------------
-bool isTrackTile() {
+bool isTrackTile(x,y) {
+    if (!isInBounds(x,y)){
+        return false;
+    }
+ char tile =grid[x][y]
+if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
+
+        return true;
+    }
+
+
 }
 
 // ----------------------------------------------------------------------------
