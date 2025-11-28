@@ -1,4 +1,3 @@
-
 # Switchback Rails - Railway Simulation Game
 
 A deterministic railway simulation implementing deferred switch mechanics, dynamic train scheduling, and collision detection.
@@ -131,6 +130,3 @@ Fully compliant with the Switchback Rails specification:
 - Proper evidence file generation
 
 Built using only Programming Fundamentals concepts (no classes/structs).
-
-A project of game development using SFML and C++ libraries
->>>>>>> 35a05a93d3d8361136e287c18fcf5e94ae78f1d1
