@@ -43,11 +43,17 @@ bool isTrackTile(x,y) {
     }
  char tile =grid[x][y]
 if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
-
         return true;
     }
 
-
+    if (tile =='S'||tile == D'||tile =='='){
+        return true;
+    }
+        if (tile >= 'A'&&tile <= 'Z') {
+        return true;
+    }
+    
+    return false;
 }
 
 // ----------------------------------------------------------------------------
