@@ -52,10 +52,11 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
         if (tile >= 'A'&&tile <= 'Z') {
         return true;
     }
-    if(tile=='R'||tile=='Y'||tile=='G'||tile='B'||tile=='F'){
+    if(tile=='R'||tile=='Y'||tile=='G'||tile=='B'||tile=='F'){
         return true;
     }
     if(tile>='1'&&tile<='9'){
+        return true;
 
     }
    return false;

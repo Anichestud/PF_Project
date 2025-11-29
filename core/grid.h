@@ -14,10 +14,10 @@ bool isInBounds(int x,int y);
 bool isTrackTile(int x,int y);
 
 // Check if a tile is a switch (A-Z)
-bool isSwitchTile(char letter);
+bool isSwitchTile( int x,int y);
 
 // Get the switch index (0-25) from a switch character (A-Z)
-int getSwitchIndex(int x,int y);
+int getSwitchIndex(char tile);
 
 // Check if a position is a spawn point
 bool isSpawnPoint(int x,int y);
