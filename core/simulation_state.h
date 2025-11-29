@@ -1,94 +1,57 @@
 #ifndef SIMULATION_STATE_H
 #define SIMULATION_STATE_H
 
-// ============================================================================
-// SIMULATION_STATE.H - Global constants and state
-// ============================================================================
-// Global constants and arrays used by the game.
-// ============================================================================
+const int MAX_ROWS = 50;
+const int MAX_COLS = 50;
+const int MAX_TRAINS = 100;
+const int MAX_SWITCHES = 26;
+const int MAX_SPAWN_POINTS = 20;
+const int MAX_DESTINATIONS = 20;
 
-// ----------------------------------------------------------------------------
-// GRID CONSTANTS
-// ----------------------------------------------------------------------------
-const char grid_size[200][200];
-const int grid_rows;
-const int grid_column ;
+struct Train {
+    int id;
+    int x, y;
+    int direction;
+    int destX, destY;
+    bool isActive;
+    bool hasCrashed;
+    bool hasArrived;
+    int waitTicks;
+};
 
-// ----------------------------------------------------------------------------
-// TRAIN CONSTANTS
-// ----------------------------------------------------------------------------
-const int max_trains;
-const int trains= 0;
-const int space_train;
-const int spawn;
+struct Switch {
+    char letter;
+    int currentState;
+    int counter;
+    int kValue;
+};
 
+extern char grid[MAX_ROWS][MAX_COLS];
+extern int gridRows;  // ← FIX: gridRows not current_rows
+extern int gridCols;  // ← FIX: gridCols not current_cols
 
-// ----------------------------------------------------------------------------
-// SWITCH CONSTANTS
-// ---------------------------------------------------------------------------'''''''''''''''''''''''''''''''''''''''''''''''''''-
-const char switch;
+extern Train trains[MAX_TRAINS];
+extern int numTrains;
 
+extern Switch switches[MAX_SWITCHES];
+extern int numSwitches;
 
-// ----------------------------------------------------------------------------
-// WEATHER CONSTANTS
-// ----------------------------------------------------------------------------
-const int weather_norm=0;
-const int weather_rain=1;
-const int weather_fog=2;
+extern int spawnPointsX[MAX_SPAWN_POINTS];
+extern int spawnPointsY[MAX_SPAWN_POINTS];
+extern int numSpawnPoints;
 
-// ----------------------------------------------------------------------------
-// SIGNAL CONSTANTS
-// ----------------------------------------------------------------------------
-const int red_color = 0xFF0000;
-const int green_color= 0x00FF00;
-const int yellow_color= 0xFFF700;
+extern int destinationsX[MAX_DESTINATIONS];
+extern int destinationsY[MAX_DESTINATIONS];
+extern int numDestinations;
 
+extern int currentTick;
+extern int seed;
+extern bool isRunning;
+extern bool isPaused;
 
+extern int trainsDelivered;
+extern int trainsCrashed;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: GRID
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: TRAINS
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SWITCHES (A-Z mapped to 0-25)
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SPAWN POINTS
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: DESTINATION POINTS
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SIMULATION PARAMETERS
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: METRICS
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: EMERGENCY HALT
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// INITIALIZATION FUNCTION
-// ----------------------------------------------------------------------------
-// Resets all state before loading a new level.
 void initializeSimulationState();
 
 #endif
