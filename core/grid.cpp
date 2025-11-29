@@ -16,7 +16,7 @@ bool isInBounds(int x,int y) {
     cout<<"Out of tile track"
     return false;
 }
-if(x>=row){
+if(x>=grid_row){
     cout<<"Out of tile track"
     return false;
 }
@@ -24,7 +24,7 @@ if(y<0){
     cout<<"Out of tile track"
     return false;
 }
-if(y>=col){
+if(y>=grid_col){
     cout<<"Out of tile track"
     return false;
 }
@@ -52,8 +52,13 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
         if (tile >= 'A'&&tile <= 'Z') {
         return true;
     }
-    
-    return false;
+    if(tile=='R'||tile=='Y'||tile='G'||tile='B'||tile=='F'){
+        return true;
+    }
+    if(tile>='1'&&tile<='9'){
+
+    }
+   return false;
 }
 
 // ----------------------------------------------------------------------------
@@ -61,7 +66,8 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
 // ----------------------------------------------------------------------------
 // Returns true if the tile is 'A'..'Z'.
 // ----------------------------------------------------------------------------
-bool isSwitchTile() {
+bool isSwitchTile(char tile) {
+    return tile>='A'&&tile<='Z';
 }
 
 // ----------------------------------------------------------------------------
@@ -69,7 +75,11 @@ bool isSwitchTile() {
 // ----------------------------------------------------------------------------
 // Maps 'A'..'Z' to 0..25, else -1.
 // ----------------------------------------------------------------------------
-int getSwitchIndex() {
+int getSwitchIndex(char tile) {
+    if(tile>='A'&&tile<='Z'){
+        return tile -'A';
+    }
+    return -1;
 }
 
 // ----------------------------------------------------------------------------
