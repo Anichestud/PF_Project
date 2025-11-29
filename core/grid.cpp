@@ -13,19 +13,19 @@
 // ----------------------------------------------------------------------------
 bool isInBounds(int x,int y) {
     if(x<0){
-    cout<<"Out of tile track"
+    //cout<<"Out of tile track"
     return false;
 }
 if(x>=grid_row){
-    cout<<"Out of tile track"
+  //  cout<<"Out of tile track"
     return false;
 }
 if(y<0){
-    cout<<"Out of tile track"
+  //  cout<<"Out of tile track"
     return false;
 }
 if(y>=grid_col){
-    cout<<"Out of tile track"
+  //  cout<<"Out of tile track"
     return false;
 }
 
@@ -46,7 +46,7 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
         return true;
     }
 
-    if (tile =='S'||tile == D'||tile =='='){
+    if (tile =='S'||tile == 'D'||tile =='='){
         return true;
     }
         if (tile >= 'A'&&tile <= 'Z') {
@@ -66,8 +66,9 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
 // ----------------------------------------------------------------------------
 // Returns true if the tile is 'A'..'Z'.
 // ----------------------------------------------------------------------------
-bool isSwitchTile(char tile) {
-    return tile>='A'&&tile<='Z';
+bool isSwitchTile(char tile){ 
+if(tile>='A'&&tile<='Z')
+    return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ bool isSwitchTile(char tile) {
 // ----------------------------------------------------------------------------
 int getSwitchIndex(char tile) {
     if(tile>='A'&&tile<='Z'){
-        return tile -'A';
+        return tile 'A';
     }
     return -1;
 }
@@ -87,7 +88,10 @@ int getSwitchIndex(char tile) {
 // ----------------------------------------------------------------------------
 // Returns true if x,y is a spawn.
 // ----------------------------------------------------------------------------
-bool isSpawnPoint() {
+bool isSpawnPoint(char tile) {
+    if(tile>='1'&&tile<='9'||tile=='S'){
+        return true;
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -95,7 +99,10 @@ bool isSpawnPoint() {
 // ----------------------------------------------------------------------------
 // Returns true if x,y is a destination.
 // ----------------------------------------------------------------------------
-bool isDestinationPoint() {
+bool isDestinationPoint(char tile) {
+    if(tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'||tile='D'){
+        return true;
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -103,5 +110,9 @@ bool isDestinationPoint() {
 // ----------------------------------------------------------------------------
 // Returns true if toggled successfully.
 // ----------------------------------------------------------------------------
-bool toggleSafetyTile() {
+bool toggleSafetyTile(char tile) {
+    if(tile=='='){
+        return true;
+    }
+
 }

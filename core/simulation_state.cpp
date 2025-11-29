@@ -8,7 +8,7 @@
 // ----------------------------------------------------------------------------
 // GRID
 // ---------------------------------------------------------------------------
-extern char grid_size[max_rows][max_cols];
+extern char grid_size[m][max_cols];
 extern int grid_rows=0;
 extern int grid_column=0 ;
 

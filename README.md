@@ -72,8 +72,7 @@ make clean      # Clean build files
 
 1. **easy_level.lvl** - 2 trains, simple railway with minimal switches (NORMAL weather)
 2. **medium_level.lvl** - 5 trains, intersecting routes with crossings (NORMAL weather)
-3. **hard_level.lvl** - 8 trains, complex network challenge with multiple intersections (NORMAL weather)
-4. **complex_network.lvl** - 10 trains, complex interconnected network (NORMAL weather)
+3. **hard_level.lvl** - 8 trains, complex network challenge  (NORMAL weather)
 
 All trains spawn from 'S' (source) tiles and navigate to 'D' (destination) tiles.
 
