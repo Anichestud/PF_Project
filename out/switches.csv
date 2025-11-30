@@ -1,0 +1,4 @@
+Tick,Switch,Mode,State
+11,A,PER_DIR,0
+11,B,GLOBAL,1
+11,C,PER_DIR,1

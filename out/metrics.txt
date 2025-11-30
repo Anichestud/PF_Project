@@ -1,0 +1,37 @@
+========== SWITCHBACK RAILS METRICS ==========
+Level Name: Medium Railway Junction - High Traffic Test
+Total Ticks: 11
+Total Trains: 1
+Trains Delivered: 0
+Trains Crashed: 1
+Success Rate: 0%
+
+=== SWITCH STATES ===
+  Switch A: State 0 (Mode: PER_DIR)
+    K-values: UP=1 RIGHT=2 DOWN=1 LEFT=2
+  Switch B: State 1 (Mode: GLOBAL)
+    K-value (GLOBAL): 5
+  Switch C: State 1 (Mode: PER_DIR)
+    K-values: UP=2 RIGHT=2 DOWN=2 LEFT=2
+
+=== PERFORMANCE METRICS ===
+  Throughput: 0 trains per 100 ticks
+  Average Wait Time: 0 ticks (no trains arrived)
+  Signal Violations: 0
+  Total Switch Flips: 0
+  Energy Efficiency: N/A
+
+=== FINAL TRAIN STATUS ===
+  Train 0: CRASHED at (0,2) | Wait Ticks: 0
+
+=== COLLISION ANALYSIS ===
+  Distance-based priority system: ACTIVE
+  Collision types handled:
+    - Same-destination collisions
+    - Head-on swap collisions
+    - Crossing (+) collisions
+
+=== WEATHER & FEATURES ===
+  Signal violations tracked: YES
+  Weather effects: IMPLEMENTED
+  Emergency halt: IMPLEMENTED
