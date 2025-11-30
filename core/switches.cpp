@@ -13,6 +13,8 @@
 // Increment counters for trains entering switches.
 // ----------------------------------------------------------------------------
 void updateSwitchCounters() {
+    // Already done in moveAllTrains() in trains.cpp
+    // This function can be empty or just a placeholder
 }
 
 // ----------------------------------------------------------------------------
@@ -21,6 +23,12 @@ void updateSwitchCounters() {
 // Queue flips when counters hit K.
 // ----------------------------------------------------------------------------
 void queueSwitchFlips() {
+    for (int i = 0; i < numSwitches; i++) {
+        if (switches[i].counter >= switches[i].kValue) {
+            // Mark this switch to flip
+            switches[i].counter = 0;  // Reset counter
+        }
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -29,6 +37,17 @@ void queueSwitchFlips() {
 // Apply queued flips after movement.
 // ----------------------------------------------------------------------------
 void applyDeferredFlips() {
+    for (int i = 0; i < numSwitches; i++) {
+        if (switches[i].counter >= switches[i].kValue) {
+            // Flip the state
+            if (switches[i].currentState == 0) {
+                switches[i].currentState = 1;
+            } else {
+                switches[i].currentState = 0;
+            }
+            switches[i].counter = 0;
+        }
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -37,6 +56,7 @@ void applyDeferredFlips() {
 // Update signal colors for switches.
 // ----------------------------------------------------------------------------
 void updateSignalLights() {
+    // Simple placeholder - you can implement signal colors later
 }
 
 // ----------------------------------------------------------------------------
@@ -44,7 +64,14 @@ void updateSignalLights() {
 // ----------------------------------------------------------------------------
 // Manually toggle a switch state.
 // ----------------------------------------------------------------------------
-void toggleSwitchState() {
+void toggleSwitchState(int switchIndex) {
+    if (switchIndex < 0 || switchIndex >= numSwitches) return;
+    
+    if (switches[switchIndex].currentState == 0) {
+        switches[switchIndex].currentState = 1;
+    } else {
+        switches[switchIndex].currentState = 0;
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -52,5 +79,20 @@ void toggleSwitchState() {
 // ----------------------------------------------------------------------------
 // Return the state for a given direction.
 // ----------------------------------------------------------------------------
-int getSwitchStateForDirection() {
+int getSwitchStateForDirection(int switchIndex, int currentDir) {
+    if (switchIndex < 0 || switchIndex >= numSwitches) return currentDir;
+    
+    // Simplified: if state is 0, keep direction
+    // If state is 1, turn (simplified logic)
+    if (switches[switchIndex].currentState == 0) {
+        return currentDir;  // Straight
+    } else {
+        // Turn right
+        if (currentDir == 0) return 1;  // UP -> RIGHT
+        if (currentDir == 1) return 2;  // RIGHT -> DOWN
+        if (currentDir == 2) return 3;  // DOWN -> LEFT
+        if (currentDir == 3) return 0;  // LEFT -> UP
+    }
+    
+    return currentDir;
 }
