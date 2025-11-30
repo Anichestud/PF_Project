@@ -48,7 +48,7 @@ extern int numTrains;
 // SWITCHES
 // -----------------------------
 extern char switchLetter[max_switches];
-extern int switchStates[max_switches];  // <- renamed
+extern int switchStates[max_switches];  // fixed name
 extern int switchCounter[max_switches];
 extern int switchKValue[max_switches];
 extern int numSwitches;

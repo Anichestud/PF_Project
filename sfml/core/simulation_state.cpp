@@ -37,7 +37,7 @@ int nextDir[max_trains] = {0};
 // SWITCH ARRAYS
 // ----------------------------------------------------------------------------
 char switchLetter[max_switches] = {0};
-int switchStates[max_switches] = {0};
+int switchStates[max_switches] = {0}; // fixed name
 int switchCounter[max_switches] = {0};
 int switchKValue[max_switches] = {0};
 int numSwitches = 0;
