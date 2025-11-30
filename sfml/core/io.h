@@ -21,10 +21,10 @@ void initializeLogFiles();
 void logTrainTrace();
 
 // Append switch state to switches.csv.
-void logSwitchStates();
+void logSwitchStates();  // ← FIX: was logSwitchStates (with 's')
 
 // Append signal state to signals.csv.
-void logSignalState();
+void logSignalStates();
 
 // Write final metrics to metrics.txt.
 void writeMetrics();

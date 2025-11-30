@@ -1,0 +1,90 @@
+#ifndef SIMULATION_STATE_H
+#define SIMULATION_STATE_H
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+const int MAX_ROWS = 50;
+const int MAX_COLS = 50;
+const int MAX_TRAINS = 100;
+const int MAX_SWITCHES = 26;
+const int MAX_SPAWN_POINTS = 20;
+
+// ============================================================================
+// GRID
+// ============================================================================
+extern char grid[MAX_ROWS][MAX_COLS];
+extern int gridRows;
+extern int gridCols;
+
+// ============================================================================
+// TRAINS (separate arrays instead of struct!)
+// ============================================================================
+extern int trainX[MAX_TRAINS];
+extern int trainY[MAX_TRAINS];
+extern int trainDir[MAX_TRAINS];
+extern int trainDestX[MAX_TRAINS];
+extern int trainDestY[MAX_TRAINS];
+extern bool trainActive[MAX_TRAINS];
+extern bool trainCrashed[MAX_TRAINS];
+extern bool trainArrived[MAX_TRAINS];
+extern int trainWaitTicks[MAX_TRAINS];
+extern int numTrains;
+
+// ============================================================================
+// SWITCHES (separate arrays!)
+// ============================================================================
+extern char switchLetter[MAX_SWITCHES];
+extern int switchState[MAX_SWITCHES];
+extern int switchCounter[MAX_SWITCHES];
+extern int switchKValue[MAX_SWITCHES];
+extern int numSwitches;
+
+// ============================================================================
+// SPAWN & DESTINATIONS
+// ============================================================================
+extern int spawnX[MAX_SPAWN_POINTS];
+extern int spawnY[MAX_SPAWN_POINTS];
+extern int numSpawns;
+
+extern int destX[MAX_SPAWN_POINTS];
+extern int destY[MAX_SPAWN_POINTS];
+extern int numDests;
+
+// ============================================================================
+// SPAWN QUEUE
+// ============================================================================
+extern int spawnQueueTick[MAX_TRAINS];
+extern int spawnQueueX[MAX_TRAINS];
+extern int spawnQueueY[MAX_TRAINS];
+extern int spawnQueueDir[MAX_TRAINS];
+extern int spawnQueueDestX[MAX_TRAINS];
+extern int spawnQueueDestY[MAX_TRAINS];
+extern int spawnQueueSize;
+
+// ============================================================================
+// PLANNED MOVES
+// ============================================================================
+extern int plannedNextX[MAX_TRAINS];
+extern int plannedNextY[MAX_TRAINS];
+extern int plannedNextDir[MAX_TRAINS];
+
+// ============================================================================
+// SIMULATION
+// ============================================================================
+extern int currentTick;
+extern bool isRunning;
+extern bool isPaused;
+
+// ============================================================================
+// METRICS
+// ============================================================================
+extern int trainsDelivered;
+extern int trainsCrashed;
+
+// ============================================================================
+// FUNCTIONS
+// ============================================================================
+void initializeSimulationState();
+
+#endif

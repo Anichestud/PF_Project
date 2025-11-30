@@ -7,7 +7,6 @@
 
 // ----------------------------------------------------------------------------
 // Check if a position is inside the grid.
-
 // ---------------------------------------------------------------------------
 // Returns true if x,y are within bounds.
 // ----------------------------------------------------------------------------
@@ -16,7 +15,7 @@ bool isInBounds(int x,int y) {
     //cout<<"Out of tile track"
     return false;
 }
-if(x>=max_cols){  // ← FIXED: grid_row → max_cols
+if(x>=max_cols){  // ← FIXED: MAX_COLS → max_cols (lowercase!)
   //  cout<<"Out of tile track"
     return false;
 }
@@ -24,7 +23,7 @@ if(y<0){
   //  cout<<"Out of tile track"
     return false;
 }
-if(y>=max_rows){  // ← FIXED: grid_col → max_rows
+if(y>=max_rows){  // ← FIXED: MAX_ROWS → max_rows (lowercase!)
   //  cout<<"Out of tile track"
     return false;
 }
@@ -33,7 +32,6 @@ return  true;
 
 // ----------------------------------------------------------------------------
 // Check if a tile is a track tile.
-
 // ----------------------------------------------------------------------------
 // Returns true if the tile can be traversed by trains.
 // ----------------------------------------------------------------------------
@@ -46,19 +44,7 @@ if (tile =='-'||tile == '|'||tile == '/'||tile == '\\'||tile == '+'){
         return true;
     }
 
-    if (tile =='S'||tile == 'D'||tile =='='){
-        return true;
-    }
-        if (tile >= 'A'&&tile <= 'Z') {
-        return true;
-    }
-    if(tile=='R'||tile=='Y'||tile=='G'||tile=='B'||tile=='F'){
-        return true;
-    }
-    if(tile>='1'&&tile<='9'){
-        return true;
 
-    }
    return false;
 }
 

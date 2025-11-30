@@ -4,20 +4,46 @@
 #include "../core/io.h"
 #include <iostream>
 
-// ============================================================================
-// MAIN.CPP - Entry point of the application (NO CLASSES)
-// ============================================================================
+using namespace std;
 
-// ----------------------------------------------------------------------------
-// MAIN ENTRY POINT
-// ----------------------------------------------------------------------------
-// This function is the main entry point of the application. It handles command
-// line arguments to specify the level file to load, loads the level file using
-// loadLevelFile, initializes the simulation system, initializes the SFML
-// application window, prints control instructions to the console, runs the
-// main application loop, cleans up resources, and prints final simulation
-// statistics. Returns 0 on success, 1 on error (e.g., failed to load level
-// file or initialize application).
-// ----------------------------------------------------------------------------
 int main() {
+    cout << "Switchback Rails - Loading..." << endl;
+    
+    initializeSimulationState();
+    
+    if (!loadLevelFile()) {
+        cout << "Failed to load level file!" << endl;
+        return 1;
+    }
+    
+    cout << "Level loaded successfully!" << endl;
+    cout << "Trains: " << numTrains << endl;
+    cout << "Switches: " << numSwitches << endl;
+    
+    initializeSimulation();
+    
+    if (!initializeApp()) {
+        cout << "Failed to initialize app!" << endl;
+        return 1;
+    }
+    
+    cout << "Controls: SPACE=pause, ESC=exit" << endl;
+    
+    runApp();
+    
+    writeMetrics();
+    cleanupApp();
+    
+    cout << "Simulation complete!" << endl;
+    cout << "Delivered: " << trainsDelivered << endl;
+   // Count crashed trains manually
+int crashedCount = 0;
+for (int i = 0; i < numTrains; i++) {
+    if (trainCrashed[i] == 1) {
+        crashedCount++;
+    }
+}
+cout << "Crashed: " << crashedCount << endl;
+    
+    return 0;
 }
