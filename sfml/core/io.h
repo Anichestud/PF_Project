@@ -21,7 +21,7 @@ void initializeLogFiles();
 void logTrainTrace();
 
 // Append switch state to switches.csv.
-void logSwitchState();
+void logSwitchStates();
 
 // Append signal state to signals.csv.
 void logSignalState();

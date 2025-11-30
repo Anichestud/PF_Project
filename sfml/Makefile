@@ -1,7 +1,6 @@
 # ============================================================================
 # Makefile for Switchback Rails
 # ============================================================================
-
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra -g
 SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
@@ -9,7 +8,7 @@ SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 # Source files
 CORE_SRCS = core/simulation_state.cpp core/grid.cpp core/trains.cpp \
             core/switches.cpp core/simulation.cpp core/io.cpp
-SFML_SRCS = sfml/app.cpp sfml/main.cpp
+SFML_SRCS = app.cpp main.cpp    # correct, in current folder
 
 # Object files
 CORE_OBJS = $(CORE_SRCS:.cpp=.o)
@@ -62,4 +61,3 @@ help:
 	@echo "Read README.md for complete documentation!"
 
 .PHONY: all clean run help
-

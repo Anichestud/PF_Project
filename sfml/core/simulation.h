@@ -4,8 +4,7 @@
 // ============================================================================
 // SIMULATION.H - Simulation tick logic
 // ============================================================================
-extern int spawn_tick[max_spawns];
-extern int spawn_dir[max_spawns]
+
 // ----------------------------------------------------------------------------
 // MAIN SIMULATION FUNCTION
 // ----------------------------------------------------------------------------
@@ -25,5 +24,3 @@ void initializeSimulation();
 bool isSimulationComplete();
 
 #endif
-
-

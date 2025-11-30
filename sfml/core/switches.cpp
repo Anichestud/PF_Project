@@ -24,9 +24,9 @@ void updateSwitchCounters() {
 // ----------------------------------------------------------------------------
 void queueSwitchFlips() {
     for (int i = 0; i < numSwitches; i++) {
-        if (switches[i].counter >= switches[i].kValue) {
+        if (switchCounter[i] >= switchKValue[i]) {
             // Mark this switch to flip
-            switches[i].counter = 0;  // Reset counter
+            switchCounter[i] = 0;  // Reset counter
         }
     }
 }
@@ -38,14 +38,14 @@ void queueSwitchFlips() {
 // ----------------------------------------------------------------------------
 void applyDeferredFlips() {
     for (int i = 0; i < numSwitches; i++) {
-        if (switches[i].counter >= switches[i].kValue) {
+        if (switchCounter[i] >= switchKValue[i]) {
             // Flip the state
-            if (switches[i].currentState == 0) {
-                switches[i].currentState = 1;
+            if (switchStates[i] == 0) {
+                switchStates[i] = 1;
             } else {
-                switches[i].currentState = 0;
+                switchStates[i] = 0;
             }
-            switches[i].counter = 0;
+            switchCounter[i] = 0;
         }
     }
 }
@@ -67,10 +67,10 @@ void updateSignalLights() {
 void toggleSwitchState(int switchIndex) {
     if (switchIndex < 0 || switchIndex >= numSwitches) return;
     
-    if (switches[switchIndex].currentState == 0) {
-        switches[switchIndex].currentState = 1;
+    if (switchStates[switchIndex] == 0) {
+        switchStates[switchIndex] = 1;
     } else {
-        switches[switchIndex].currentState = 0;
+        switchStates[switchIndex] = 0;
     }
 }
 
@@ -84,7 +84,7 @@ int getSwitchStateForDirection(int switchIndex, int currentDir) {
     
     // Simplified: if state is 0, keep direction
     // If state is 1, turn (simplified logic)
-    if (switches[switchIndex].currentState == 0) {
+    if (switchStates[switchIndex] == 0) {
         return currentDir;  // Straight
     } else {
         // Turn right

@@ -8,86 +8,122 @@
 // ----------------------------------------------------------------------------
 // GRID
 // ----------------------------------------------------------------------------
-extern char grid[max_rows][max_cols];
-const int max_rows=200;
-cost int max_cols=200;
-
+char grid[max_rows][max_cols];
 
 // ----------------------------------------------------------------------------
-// TRAINS
+// TRAIN ARRAYS
 // ----------------------------------------------------------------------------
-extern int train_count;
+int trainX[max_trains] = {0};
+int trainY[max_trains] = {0};
+int trainDir[max_trains] = {0};
+int trainActive[max_trains] = {0};
+int trainCrashed[max_trains] = {0};
+int trainArrived[max_trains] = {0};
+int trainWait[max_trains] = {0};
+int trainDestX[max_trains] = {0};
+int trainDestY[max_trains] = {0};
+int trainSpawnTick[max_trains] = {0};
+int numTrains = 0;
+
+int startX[max_trains] = {0};
+int startY[max_trains] = {0};
+int startDir[max_trains] = {0};
+
+int nextX[max_trains] = {0};
+int nextY[max_trains] = {0};
+int nextDir[max_trains] = {0};
 
 // ----------------------------------------------------------------------------
-// SWITCHES
+// SWITCH ARRAYS
 // ----------------------------------------------------------------------------
-extern bool switch_states[26];
+char switchLetter[max_switches] = {0};
+int switchStates[max_switches] = {0};
+int switchCounter[max_switches] = {0};
+int switchKValue[max_switches] = {0};
+int numSwitches = 0;
+
 // ----------------------------------------------------------------------------
 // SPAWN AND DESTINATION POINTS
 // ----------------------------------------------------------------------------
-extern int spawn_X[max_spawn];
-extern int spawn_Y[max_spawn];
-extern int spawn_count;
-extern int dest_X[max-dest];
-extern int dest_Y[max<_dest];
+int spawn_X[max_spawns] = {0};
+int spawn_Y[max_spawns] = {0};
+int spawn_Count = 0;
+
+int dest_X[max_dests] = {0};
+int dest_Y[max_dests] = {0};
+int dest_count = 0;
+
 // ----------------------------------------------------------------------------
 // SIMULATION PARAMETERS
 // ----------------------------------------------------------------------------
+int currentTick = 0;
+int seed = 0;
 
-int tickSpeed=1;
-bool paused=false;
 // ----------------------------------------------------------------------------
 // METRICS
 // ----------------------------------------------------------------------------
-int trains_arrived=0;
-int trains_crashed=0;
+int trainsDelivered = 0;
+int trainsCrashed = 0;
+
 // ----------------------------------------------------------------------------
 // EMERGENCY HALT
 // ----------------------------------------------------------------------------
-bool emergencyHalt=false;
+bool emergencyActive = false;
+int emergencyTicks = 0;
+
 // ============================================================================
 // INITIALIZE SIMULATION STATE
 // ============================================================================
-// ----------------------------------------------------------------------------
-// Resets all global simulation state.
-// ----------------------------------------------------------------------------
-// Called before loading a new level.
-// ----------------------------------------------------------------------------
 void initializeSimulationState() {
 
-    // clear grid
-    for(int y=0;y<max_rows;y++){
-        for(int x=0;x<max_cols;x++){
-            grid[y][x]=' ';
+    // Clear grid
+    for (int y = 0; y < max_rows; y++) {
+        for (int x = 0; x < max_cols; x++) {
+            grid[y][x] = ' ';
         }
     }
 
-    // reset trains
-    trainCount=0;
-    for(int i=0;i<max_trains;i++){
-        trains[i].active=false;
+    // Reset train arrays
+    numTrains = 0;
+    for (int i = 0; i < max_trains; i++) {
+        trainX[i] = trainY[i] = trainDir[i] = trainActive[i] = 0;
+        trainCrashed[i] = trainArrived[i] = trainWait[i] = 0;
+        trainDestX[i] = trainDestY[i] = trainSpawnTick[i] = -1;
+
+        startX[i] = startY[i] = startDir[i] = 0;
+        nextX[i] = nextY[i] = nextDir[i] = 0;
     }
 
-    // reset switches
-    for(int i=0;i<26;i++){
-        switch_states[i]=false;
+    // Reset switches
+    numSwitches = 0;
+    for (int i = 0; i < max_switches; i++) {
+        switchLetter[i] = '\0';
+        switchStates[i] = 0;
+        switchCounter[i] = 0;
+        switchKValue[i] = 1;
     }
 
-    // reset spawns
-    spawn_count=0;
+    // Reset spawns
+    spawn_Count = 0;
+    for (int i = 0; i < max_spawns; i++) {
+        spawn_X[i] = spawn_Y[i] = 0;
+    }
 
-    // reset destinations
-    destCount=0;
+    // Reset destinations
+    dest_count = 0;
+    for (int i = 0; i < max_dests; i++) {
+        dest_X[i] = dest_Y[i] = 0;
+    }
 
-    // sim params
-    tickSpeed=1;
-    paused=false;
+    // Simulation parameters
+    currentTick = 0;
+    seed = 0;
 
-    // metrics
-    trainsArrived=0;
-    trainsCrashed=0;
+    // Metrics
+    trainsDelivered = 0;
+    trainsCrashed = 0;
 
-    // halt flag
-    emergencyHalt=false;
+    // Emergency halt
+    emergencyActive = false;
+    emergencyTicks = 0;
 }
-

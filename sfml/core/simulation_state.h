@@ -2,96 +2,89 @@
 #define SIMULATION_STATE_H
 
 // ============================================================================
-// SIMULATION_STATE.H - Global constants and state
+// SIMULATION_STATE.H - Global simulation state
 // ============================================================================
-// Global constants and arrays used by the game.
-// ============================================================================
-extern int spawn_tick[max_spawns];
-extern int spawn_dir[max_spawns]
-// ----------------------------------------------------------------------------
-// GRID CONSTANTS
-// ----------------------------------------------------------------------------
 
+// -----------------------------
+// LIMITS / MAX VALUES
+// -----------------------------
+const int max_rows = 200;
+const int max_cols = 200;
+const int max_trains = 50;
+const int max_switches = 50;
+const int max_spawns = 50;
+const int max_dests = 50;
+
+// -----------------------------
+// GRID
+// -----------------------------
 extern char grid[max_rows][max_cols];
-// ----------------------------------------------------------------------------
-// TRAIN CONSTANTS
-// ----------------------------------------------------------------------------
 
-extern Train trains[max_trains];
-extern int trainCount=0;
-// ----------------------------------------------------------------------------
-// SWITCH CONSTANTS
-// ----------------------------------------------------------------------------
+// -----------------------------
+// TRAINS
+// -----------------------------
+extern int trainX[max_trains];
+extern int trainY[max_trains];
+extern int trainDir[max_trains];
+extern int trainActive[max_trains];
+extern int trainCrashed[max_trains];
+extern int trainArrived[max_trains];
+extern int trainWait[max_trains];
+extern int trainDestX[max_trains];
+extern int trainDestY[max_trains];
+extern int trainSpawnTick[max_trains];
 
-extern bool switchStates[max_switches];
-// ----------------------------------------------------------------------------
-// WEATHER CONSTANTS
-// ----------------------------------------------------------------------------
-const int max_spawns=50;
+extern int startX[max_trains];
+extern int startY[max_trains];
+extern int startDir[max_trains];
 
-// ----------------------------------------------------------------------------
-// SIGNAL CONSTANTS
-// ----------------------------------------------------------------------------
-const int max_dests=50;
+extern int nextX[max_trains];
+extern int nextY[max_trains];
+extern int nextDir[max_trains];
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: GRID
-// ----------------------------------------------------------------------------
-extern char grid[max_rows][max_cols]; 
+extern int numTrains;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: TRAINS
-// ----------------------------------------------------------------------------
-struct Train {
-    int x;   
-    int y;      
-    int dir;    
-    bool active;
-};
+// -----------------------------
+// SWITCHES
+// -----------------------------
+extern char switchLetter[max_switches];
+extern int switchStates[max_switches];  // <- renamed
+extern int switchCounter[max_switches];
+extern int switchKValue[max_switches];
+extern int numSwitches;
 
-extern Train trains[max_trains]; 
-extern int train_count;           
+// -----------------------------
+// SPAWN & DESTINATION POINTS
+// -----------------------------
+extern int spawn_X[max_spawns];
+extern int spawn_Y[max_spawns];
+extern int spawn_Count;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SWITCHES (A-Z mapped to 0-25)
-// ----------------------------------------------------------------------------
-extern bool switch_states[max_switches]; 
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SPAWN POINTS
-// ----------------------------------------------------------------------------
-extern int spawn_X[max_spawns]; 
-extern int spawn_Y[max_spawns]; 
-extern int spawn_Count;      
-
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: DESTINATION POINTS
-// ----------------------------------------------------------------------------
 extern int dest_X[max_dests];
-extern int dest_Y[max_dests]; 
-extern int dest_count;     
+extern int dest_Y[max_dests];
+extern int dest_count;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: SIMULATION PARAMETERS
-// ----------------------------------------------------------------------------
-extern int tick_speed; 
-extern bool paused;   
+// -----------------------------
+// SIMULATION PARAMS
+// -----------------------------
+extern int currentTick;
+extern int seed;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: METRICS
-// ----------------------------------------------------------------------------
-extern int trains_arrived; 
-extern int trains_crashed; 
+// -----------------------------
+// METRICS
+// -----------------------------
+extern int trainsDelivered;
+extern int trainsCrashed;
 
-// ----------------------------------------------------------------------------
-// GLOBAL STATE: EMERGENCY HALT
-// ----------------------------------------------------------------------------
-extern bool emergency_halt; 
+// -----------------------------
+// EMERGENCY HALT
+// -----------------------------
+extern bool emergencyActive;
+extern int emergencyTicks;
 
-// ----------------------------------------------------------------------------
-// INITIALIZATION FUNCTION
-// ----------------------------------------------------------------------------
-// Resets all state before loading a new level.
+// -----------------------------
+// FUNCTIONS
+// -----------------------------
 void initializeSimulationState();
 
 #endif

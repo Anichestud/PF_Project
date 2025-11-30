@@ -16,7 +16,7 @@ bool isInBounds(int x,int y) {
     //cout<<"Out of tile track"
     return false;
 }
-if(x>=grid_row){
+if(x>=max_cols){  // ← FIXED: grid_row → max_cols
   //  cout<<"Out of tile track"
     return false;
 }
@@ -24,7 +24,7 @@ if(y<0){
   //  cout<<"Out of tile track"
     return false;
 }
-if(y>=grid_col){
+if(y>=max_rows){  // ← FIXED: grid_col → max_rows
   //  cout<<"Out of tile track"
     return false;
 }
@@ -141,4 +141,3 @@ bool toggleSafetyTile(int x, int y){
     } 
     return false; 
 }
-

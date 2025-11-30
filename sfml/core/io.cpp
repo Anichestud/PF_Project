@@ -28,7 +28,7 @@ bool loadLevelFile() {
     int mode = 0;
     int map_y = 0;
 
-    init_simulation(); // reset all counts and arrays
+    initializeSimulationState(); // ← FIXED: was init_simulation
 
     while (fgets(line, 512, file)) {
         if (line[0] == '\n') continue;
@@ -38,41 +38,45 @@ bool loadLevelFile() {
         if (strncmp(line, "TRAINS:", 7) == 0) { mode = 3; continue; }
 
         if (mode == 1) {  // MAP
-            for (int c = 0; c < (int)strlen(line) && c < COLS; c++) {
+            for (int c = 0; c < (int)strlen(line) && c < max_cols; c++) {  // ← FIXED: COLS → max_cols
                 grid[map_y][c] = line[c];
             }
             map_y++;
         }
 
-        else if (mode == 2 && s_count < MAX_SWITCHES) {  // SWITCHES
-            s_x[s_count] = 0;
-            s_y[s_count] = 0;
-            s_mode[s_count] = 1;
-            for (int k = 0; k < 4; k++) s_k[s_count][k] = 3;
-            s_turned[s_count] = 0;
-            s_count++;
+        else if (mode == 2 && numSwitches < max_switches) {  // ← FIXED: s_count → numSwitches, MAX_SWITCHES → max_switches
+            // SWITCHES - just parse the letter and k-value
+            char letter;
+            char modeStr[20];
+            int kVal;
+            
+            if (sscanf(line, "%c %s %*d %d", &letter, modeStr, &kVal) == 3) {
+                switchLetter[numSwitches] = letter;
+                switchKValue[numSwitches] = kVal;
+                switchStates[numSwitches] = 0;
+                switchCounter[numSwitches] = 0;
+                numSwitches++;
+            }
         }
 
-        else if (mode == 3 && t_count < MAX_TRAINS) {  // TRAINS
+        else if (mode == 3 && numTrains < max_trains) {  // ← FIXED: t_count → numTrains, MAX_TRAINS → max_trains
             int tick, x, y, dir, col;
             if (sscanf(line, "%d %d %d %d %d", &tick, &x, &y, &dir, &col) != 5)
                 sscanf(line, "%d %d %d %d", &tick, &x, &y, &dir), col = 0;
 
-            t_spawn_tick[t_count] = tick;
-            t_x[t_count] = x;
-            t_y[t_count] = y;
-            t_dir[t_count] = dir;
-            t_color[t_count] = col;
-            t_state[t_count] = 0; // WAIT
-            t_id[t_count] = t_count;
-            t_count++;
+            trainSpawnTick[numTrains] = tick;  // ← FIXED: t_spawn_tick → trainSpawnTick
+            startX[numTrains] = x;              // ← FIXED: t_x → startX
+            startY[numTrains] = y;              // ← FIXED: t_y → startY
+            startDir[numTrains] = dir;          // ← FIXED: t_dir → startDir
+            trainActive[numTrains] = 0;         // ← FIXED: t_state → trainActive (0 = not spawned yet)
+            numTrains++;
         }
     }
 
     // Assign simple destination for each train
-    for (int i = 0; i < t_count; i++) {
-        t_target_x[i] = t_x[i];
-        t_target_y[i] = (t_y[i] + 5) % ROWS; // just a simple target
+    for (int i = 0; i < numTrains; i++) {
+        trainDestX[i] = startX[i];                           // ← FIXED: t_target_x → trainDestX
+        trainDestY[i] = (startY[i] + 5) % max_rows;        // ← FIXED: ROWS → max_rows
     }
 
     fclose(file);
@@ -107,9 +111,14 @@ void logTrainTrace() {
     FILE* f = fopen("trace.csv", "a");
     if (!f) return;
 
-    for (int i = 0; i < t_count; i++) {
-        if (t_state[i] == 1) {
-            fprintf(f, "%d,%d,%d,%d,%d\n", current_tick, i, t_x[i], t_y[i], t_state[i]);
+    for (int i = 0; i < numTrains; i++) {              // ← FIXED: t_count → numTrains
+        if (trainActive[i] == 1) {                     // ← FIXED: t_state → trainActive
+            fprintf(f, "%d,%d,%d,%d,%d\n", 
+                    currentTick,                        // ← FIXED: current_tick → currentTick
+                    i, 
+                    trainX[i],                          // ← FIXED: t_x → trainX
+                    trainY[i],                          // ← FIXED: t_y → trainY
+                    trainActive[i]);                    // ← FIXED: t_state → trainActive
         }
     }
 
@@ -121,12 +130,16 @@ void logTrainTrace() {
 // ----------------------------------------------------------------------------
 // Append tick, switch id/mode/state to switches.csv.
 // ----------------------------------------------------------------------------
-void logSwitchState() {
+void logSwitchStates() {
     FILE* f = fopen("switches.csv", "a");
     if (!f) return;
 
-    for (int i = 0; i < s_count; i++) {
-        fprintf(f, "%d,%d,%d,%d\n", current_tick, i, s_mode[i], s_turned[i]);
+    for (int i = 0; i < numSwitches; i++) {            // ← FIXED: s_count → numSwitches
+        fprintf(f, "%d,%d,%d,%d\n", 
+                currentTick,                            // ← FIXED: current_tick → currentTick
+                i, 
+                0,                                      // ← FIXED: s_mode (placeholder)
+                switchStates[i]);                        // ← FIXED: s_turned → switchState
     }
 
     fclose(f);
@@ -141,9 +154,12 @@ void logSignalState() {
     FILE* f = fopen("signals.csv", "a");
     if (!f) return;
 
-    for (int i = 0; i < s_count; i++) {
+    for (int i = 0; i < numSwitches; i++) {            // ← FIXED: s_count → numSwitches
         int signal = 0; // just green
-        fprintf(f, "%d,%d,%d\n", current_tick, i, signal);
+        fprintf(f, "%d,%d,%d\n", 
+                currentTick,                            // ← FIXED: current_tick → currentTick
+                i, 
+                signal);
     }
 
     fclose(f);
@@ -158,9 +174,9 @@ void writeMetrics() {
     FILE* f = fopen("metrics.txt", "w");
     if (!f) return;
 
-    fprintf(f, "Total Ticks: %d\n", current_tick);
-    fprintf(f, "Trains Arrived: %d\n", trains_arrived);
-    fprintf(f, "Trains Crashed: %d\n", trains_crashed);
+    fprintf(f, "Total Ticks: %d\n", currentTick);      // ← FIXED: current_tick → currentTick
+    fprintf(f, "Trains Arrived: %d\n", trainsDelivered); // ← FIXED: trains_arrived → trainsDelivered
+    fprintf(f, "Trains Crashed: %d\n", trainsCrashed);   // ← FIXED: trains_crashed → trainsCrashed
 
     fclose(f);
 }
