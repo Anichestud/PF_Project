@@ -1,9 +1,9 @@
 #include "app.h"
-#include "core/simulation_state.h"
-#include "core/simulation.h"
-#include "core/grid.h"
-#include "core/switches.h"
-#include "core/io.h"
+#include "simulation_state.h"
+#include "simulation.h"
+#include "grid.h"
+#include "switches.h"
+#include "io.h"
 
 #include <SFML/Graphics.hpp>
 #include <cmath>

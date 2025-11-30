@@ -8,10 +8,10 @@
 
 using namespace std;
 
-bool loadLevelFile() {
-    FILE* file = fopen("data/levels/easy_level.lvl", "r");
+bool loadLevelFile(const char* filename) {
+    FILE* file = fopen(filename, "r");
     if (!file) {
-        cout << "Cannot open level file" << endl;
+        cout << "Cannot open level file" <<filename<< endl;
         return false;
     }
 

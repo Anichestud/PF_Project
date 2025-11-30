@@ -1,49 +1,35 @@
 #include "app.h"
-#include "../core/simulation_state.h"
-#include "../core/simulation.h"
-#include "../core/io.h"
+#include "simulation_state.h"
+#include "simulation.h"
+#include "io.h"
 #include <iostream>
 
 using namespace std;
 
-int main() {
+int main(int argc, char** argv) {
     cout << "Switchback Rails - Loading..." << endl;
-    
-    initializeSimulationState();
-    
-    if (!loadLevelFile()) {
-        cout << "Failed to load level file!" << endl;
+
+    // Require level file argument
+    if (argc < 2) {
+        cout << "Usage: ./switchback_rails <level file>" << endl;
         return 1;
     }
-    
+
+    const char* levelFile = argv[1];
+
+    initializeSimulationState();
+
+    // Load level using provided filename
+    if (!loadLevelFile(levelFile)) {
+        cout << "Failed to load level file: " << levelFile << endl;
+        return 1;
+    }
+
     cout << "Level loaded successfully!" << endl;
     cout << "Trains: " << numTrains << endl;
-    cout << "Switches: " << numSwitches << endl;
-    
-    initializeSimulation();
-    
-    if (!initializeApp()) {
-        cout << "Failed to initialize app!" << endl;
-        return 1;
-    }
-    
-    cout << "Controls: SPACE=pause, ESC=exit" << endl;
-    
+
+    // Start the app / rendering loop
     runApp();
-    
-    writeMetrics();
-    cleanupApp();
-    
-    cout << "Simulation complete!" << endl;
-    cout << "Delivered: " << trainsDelivered << endl;
-   // Count crashed trains manually
-int crashedCount = 0;
-for (int i = 0; i < numTrains; i++) {
-    if (trainCrashed[i] == 1) {
-        crashedCount++;
-    }
-}
-cout << "Crashed: " << crashedCount << endl;
-    
+
     return 0;
 }
