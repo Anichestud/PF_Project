@@ -11,7 +11,7 @@ using namespace std;
 bool loadLevelFile(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (!file) {
-        cout << "Cannot open level file" <<filename<< endl;
+        cout << "Cannot open level file: " << filename << endl;
         return false;
     }
 
@@ -29,13 +29,13 @@ bool loadLevelFile(const char* filename) {
         if (strncmp(line, "TRAINS:", 7) == 0) { mode = 3; continue; }
 
         if (mode == 1) {
-            for (int c = 0; c < (int)strlen(line) && c < max_cols; c++) {  // ← FIX 1: MAX_COLS → max_cols
+            for (int c = 0; c < (int)strlen(line) && c < MAX_COLS; c++) {
                 grid[map_y][c] = line[c];
             }
             map_y++;
         }
 
-        else if (mode == 2 && numSwitches < max_switches) {  // ← FIX 2: MAX_SWITCHES → max_switches
+        else if (mode == 2 && numSwitches < MAX_SWITCHES) {
             char letter;
             char modeStr[20];
             int kVal;
@@ -49,7 +49,7 @@ bool loadLevelFile(const char* filename) {
             }
         }
 
-        else if (mode == 3 && numTrains < max_trains) {  // ← FIX 3: MAX_TRAINS → max_trains
+        else if (mode == 3 && numTrains < MAX_TRAINS) {
             int tick, x, y, dir, col = 0;
             if (sscanf(line, "%d %d %d %d %d", &tick, &x, &y, &dir, &col) != 5) {
                 sscanf(line, "%d %d %d %d", &tick, &x, &y, &dir);
@@ -63,10 +63,13 @@ bool loadLevelFile(const char* filename) {
             numTrains++;
         }
     }
+    
+    gridRows = map_y;
+    gridCols = MAX_COLS;
 
     for (int i = 0; i < numTrains; i++) {
         trainDestX[i] = startX[i];
-        trainDestY[i] = (startY[i] + 5) % max_rows;  // ← FIX 4: MAX_ROWS → max_rows
+        trainDestY[i] = (startY[i] + 5) % MAX_ROWS;
     }
 
     fclose(file);
@@ -101,7 +104,7 @@ void logTrainTrace() {
     fclose(f);
 }
 
-void logSwitchStates() {  // ← FIX 5: Function name was logSwitchStates, should be logSwitchState
+void logSwitchStates() {
     FILE* f = fopen("switches.csv", "a");
     if (!f) return;
 
